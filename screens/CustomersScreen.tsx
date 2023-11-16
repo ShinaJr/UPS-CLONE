@@ -8,7 +8,7 @@ const CustomersScreen = () => {
   const tw = useTailwind();
   return (
     <SafeAreaView style={tw("mt-10")}>
-      <Text style={tw("text-blue-600")}>Customers Screen</Text>
+      <Text style={tw("text-green-600")}>Customers Screen</Text>
     </SafeAreaView>
 
   )
