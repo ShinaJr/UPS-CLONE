@@ -1,0 +1,35 @@
+type Order {
+  Address: String
+  City: String
+  Lat: Float
+  Lng: Float
+  carrier: String
+  createdAt: Date
+  shippingCost: Int
+  trackingId: String
+  trackingItems: TrackingItemsList
+    @materializer(
+      query: "getTrackingItemsById"
+      arguments: [{ name: "id", field: "trackingId" }]
+    )
+}
+type OrderList {
+  name: ID
+  value: Order
+}
+
+type Query {
+  # getting orders by id by query
+  getOrdersById(id: ID): Order
+    @rest(
+      endpoint: "https://ups-clone-52080-default-rtdb.europe-west1.firebasedatabase.app/orders/$id.json"
+      # transforms: [{ pathpattern: [], editor: "objectToArray" }]
+    )
+
+  getOrders: [OrderList]
+    @rest(
+      endpoint: "https://ups-clone-52080-default-rtdb.europe-west1.firebasedatabase.app/orders.json"
+      # since the response we get from the endpoint is an object, we needed to transform it to an array for it to work
+      transforms: [{ pathpattern: [], editor: "objectToArray" }]
+    )
+}
